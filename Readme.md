@@ -10,9 +10,11 @@
 2. Execute ths script: `python3 script.py`
 
 # Results
-1. MSE with linear kernel reported in [1]: 0.824 +- 0.034
-2. MSE with linear kernel I got: 0.815 +- 0.157
-3. MSE with NTK kernel I got: 0.792 +- 0.162
+1. MSE with linear kernel SVM reported in [1]: 0.824 +- 0.034
+2. MSE with linear kernel SVM I got: 0.731 +- 0.085
+3. MSE with linear kernel regression I got: 0.738 +- 0.064
+4. MSE with NTK kernel SVM I got: 0.697 +- 0.084
+5. MSE with NTK kernel regression I got: 0.722 +- 0.061
 
 # References
 1. [DrugOrchestra](https://github.com/jiangdada1221/DrugOrchestra)

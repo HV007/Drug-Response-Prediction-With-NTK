@@ -1,6 +1,7 @@
 import numpy as np
 import NTK
 from sklearn.svm import SVR
+from sklearn.kernel_ridge import KernelRidge
 
 MAX_DEP = 5
 DEP_LIST = list(range(MAX_DEP))
@@ -23,7 +24,13 @@ for value in C_LIST:
     if mse < best_mse:
         best_mse = mse
         best_value = value
-print('MSE with linear kernel: ', mse)
+print('MSE with linear kernel SVM: ', mse)
+
+clf = KernelRidge(kernel = "linear", alpha = 1.0)
+clf.fit(X_train, y_train)
+z = clf.predict(X_test)
+mse = (np.square(z-y_test)).mean()
+print('MSE with linear kernel regression: ', mse)
 
 X = np.concatenate((X_train, X_test))
 y = np.concatenate((y_train, y_test))
@@ -31,7 +38,6 @@ y = np.concatenate((y_train, y_test))
 best_mse = 10
 best_value = 0
 best_dep = 0
-best_ker = 0
 Ks = NTK.kernel_value_batch(X, MAX_DEP)
 a = X_train.shape[0]
 train_fold = list(range(X_train.shape[0]))
@@ -53,4 +59,24 @@ for dep in DEP_LIST:
                 best_dep = dep
                 best_fix = fix_dep
 
-print('MSE with NTK: ', best_mse)
+print('MSE with NTK SVM: ', best_mse)
+
+best_mse = 10
+best_value = 0
+
+for dep in DEP_LIST:
+    for fix_dep in range(dep + 1):
+        K = Ks[dep][fix_dep]
+        kernel_train = K[train_fold][:, train_fold]
+        kernel_test = K[val_fold][:, train_fold]
+        clf = KernelRidge(kernel = "precomputed", alpha = 1.0)
+        clf.fit(kernel_train, y[train_fold])
+        z = clf.predict(kernel_test)
+        mse = (np.square(z-y[val_fold])).mean()
+        if mse < best_mse:
+            best_mse = mse
+            best_value = value
+            best_dep = dep
+            best_fix = fix_dep
+
+print('MSE with NTK regression: ', best_mse)
