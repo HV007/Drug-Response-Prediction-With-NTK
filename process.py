@@ -14,11 +14,9 @@ def main():
     index = args.number
     use_old = True if args.use_old == 1 else False
     for k in range(1):
-        print(k)
         data = np.load(paths[k])
         passed = False
         if not use_old:
-            print('use new')
             while passed != True:
                 drug = set()
                 for i in range(data.shape[0]):

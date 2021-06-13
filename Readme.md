@@ -11,10 +11,11 @@
 
 # Results
 1. MSE with linear kernel SVM reported in [1]: 0.824 +- 0.034
-2. MSE with linear kernel SVM I got: 0.731 +- 0.085
-3. MSE with linear kernel regression I got: 0.738 +- 0.064
-4. MSE with NTK kernel SVM I got: 0.697 +- 0.084
-5. MSE with NTK kernel regression I got: 0.722 +- 0.061
+2. MSE with linear kernel SVM I got: 0.807 +- 0.134
+3. MSE with linear kernel regression I got: 0.817 +- 0.120
+4. MSE with NTK kernel SVM I got: 0.766 +- 0.128
+5. MSE with NTK kernel regression I got: 0.788 +- 0.109
+6. MSE with Baysian Regression I got: 0.804 +- 0.122
 
 # References
 1. [DrugOrchestra](https://github.com/jiangdada1221/DrugOrchestra)
