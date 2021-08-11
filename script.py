@@ -3,6 +3,7 @@ import NTK
 from sklearn.svm import SVR
 from sklearn.kernel_ridge import KernelRidge
 from sklearn.linear_model import BayesianRidge
+from sklearn.ensemble import RandomForestRegressor
 import subprocess
 
 linear_svm = []
@@ -10,8 +11,9 @@ linear_regression = []
 ntk_svm = []
 ntk_regression = []
 baysian_regression = []
+random_forest_regression = []
 
-max_iter = 50
+max_iter = 20
 
 for i in range(max_iter):
     print('Iteraltion: ', i+1)
@@ -105,6 +107,15 @@ for i in range(max_iter):
 
     print('MSE with Baysian Regression: ', mse)
     baysian_regression.append(mse)
+
+    clf = RandomForestRegressor()
+    clf.fit(X_train, y_train)
+    z = clf.predict(X_test)
+    mse = (np.square(z-y[val_fold])).mean()
+
+    print('MSE with Random Forest Regression: ', mse)
+    random_forest_regression.append(mse)
+
     print('\n')
 
 print('\n')
@@ -114,9 +125,11 @@ linear_regression = np.array(linear_regression)
 ntk_svm = np.array(ntk_svm)
 ntk_regression = np.array(ntk_regression)
 baysian_regression = np.array(baysian_regression)
+random_forest_regression = np.array(random_forest_regression)
 
 print('Linear Kernel SVM: ' + str(linear_svm.mean()) + "+-" + str(linear_svm.std()))
 print('Linear Kernel Regression: ' + str(linear_regression.mean()) + "+-" + str(linear_regression.std()))
 print('NTK SVM: ' + str(ntk_svm.mean()) + "+-" + str(ntk_svm.std()))
 print('NTK Regression: ' + str(ntk_regression.mean()) + "+-" + str(ntk_regression.std()))
 print('Baysian Regression: ' + str(baysian_regression.mean()) + "+-" + str(baysian_regression.std()))
+print('Random Forest Regression: ' + str(random_forest_regression.mean()) + "+-" + str(random_forest_regression.std()))
